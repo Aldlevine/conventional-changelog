@@ -85,17 +85,6 @@ if (infile && infile === outfile) {
   }
 }
 
-var options = _.omit({
-  preset: flags.preset,
-  pkg: {
-    path: flags.pkg
-  },
-  append: append,
-  releaseCount: releaseCount,
-  outputUnreleased: flags.outputUnreleased,
-  lernaPackage: flags.lernaPackage
-}, _.isUndefined);
-
 if (flags.verbose) {
   options.debug = console.info.bind(console);
   options.warn = console.warn.bind(console);
@@ -119,6 +108,18 @@ try {
   console.error('Failed to get file. ' + err);
   process.exit(1);
 }
+
+var options = _.omit({
+  preset: flags.preset,
+  pkg: {
+    path: flags.pkg
+  },
+  append: append,
+  releaseCount: releaseCount,
+  outputUnreleased: flags.outputUnreleased,
+  lernaPackage: flags.lernaPackage,
+  transform: config.transform,
+}, _.isUndefined);
 
 var gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {});
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath;
